@@ -43,7 +43,8 @@ class Gift(models.Model):
     name = models.CharField(max_length=254)
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True, validators=[validate_positive])
     starred = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gifts_given')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gifts_received', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -11,28 +11,38 @@ class LinkInline(admin.TabularInline):
     model = Link
     fields = ('url',)
 class GiftInline(admin.TabularInline):
+    model = Gift 
+    fk_name = 'user'
+    verbose_name = 'Gift Sent'
+    verbose_name_plural = 'Gifts Sent'
+   
+
+class ReceivedGiftsInline(admin.TabularInline):
     model = Gift
+    fk_name = 'receiver'
+    verbose_name = 'Gift Received'
+    verbose_name_plural = 'Gifts Received'
 
 class WishlistItemInline(admin.TabularInline):
     model = WishlistItem
     fields = ('name',)
-    verbose_name = "Item"
-    verbose_name_plural = "Items"
+    verbose_name = 'Item'
+    verbose_name_plural = 'Items'
 
 class WishlistInline(admin.TabularInline):
     model = Wishlist
 
 class FollowerInline(admin.TabularInline):
     model = User.followers.through
-    fk_name = "to_user"
-    verbose_name = "Follower"
-    verbose_name_plural = "Followers"
+    fk_name = 'to_user'
+    verbose_name = 'Follower'
+    verbose_name_plural = 'Followers'
 
 class FollowingInline(admin.TabularInline):
     model = User.following.through 
-    fk_name = "from_user"
-    verbose_name = "Following"
-    verbose_name_plural = "Followings"
+    fk_name = 'from_user'
+    verbose_name = 'Following'
+    verbose_name_plural = 'Followings'
 
 # Filters
 class MonthFilter(admin.SimpleListFilter):
@@ -66,7 +76,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'get_profile_photo', 'email', 'password', 'first_name', 'last_name', 'birthday', 'created_at', 'updated_at']
     list_display_links = ['username']
     list_filter = ['birthday', MonthFilter]
-    inlines = [GiftInline, WishlistInline, FollowerInline, FollowingInline]
+    inlines = [GiftInline, ReceivedGiftsInline, WishlistInline, FollowerInline, FollowingInline]
 
     def get_profile_photo(self, obj):
         if obj.profile_photo and obj.profile_photo.url:
