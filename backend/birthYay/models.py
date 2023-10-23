@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 import datetime
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -18,9 +19,16 @@ class User(models.Model):
     password = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=30)
+    username = models.CharField(unique=True, max_length=30)
     birthday = models.DateField(validators=[validate_date_in_past])
+    profile_photo = models.ImageField(
+         upload_to='images/profile_photos', 
+         blank=True,
+         default='../media/images/profile_photos/default-totoro-profile.png'
+    )
     followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True, default=None, editable=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -28,14 +36,16 @@ class User(models.Model):
         super(User, self).save(*args, **kwargs)
     
     def __str__(self) -> str:
-        return self.first_name + self.last_name
+        return self.first_name + ' ' + self.last_name
     
 class Gift(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=254)
-    price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, validators=[validate_positive])
+    price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True, validators=[validate_positive])
     starred = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -48,7 +58,9 @@ class Gift(models.Model):
 class Link(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     url = models.URLField()
-    gift = models.ForeignKey(Gift, on_delete=models.CASCADE)
+    gift = models.ForeignKey(Gift, on_delete=models.CASCADE, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.url
@@ -57,4 +69,34 @@ class Link(models.Model):
         if not self.id:
             self.id = uuid.uuid4()
         super(Link, self).save(*args, **kwargs)
-        
+
+class Wishlist(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name='wishlist')    
+    message = models.CharField(max_length=254, blank=True, null=True, default='Have a peek!')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return ''
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = uuid.uuid4()
+        super(Wishlist, self).save(*args, **kwargs)
+
+class WishlistItem(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=254)
+    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = uuid.uuid4()
+        super(WishlistItem, self).save(*args, **kwargs)
+     
