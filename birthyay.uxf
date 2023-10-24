@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.3.0">
+<diagram program="umlet" version="14.1.1">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
@@ -7,7 +7,7 @@
       <x>390</x>
       <y>310</y>
       <w>220</w>
-      <h>190</h>
+      <h>420</h>
     </coordinates>
     <panel_attributes>User
 --
@@ -21,6 +21,12 @@
 - updatedAt: date
 - avatar: file
 --
++ create()
++ addGift()
++ updateGift()
++ deleteGift()
++ getGift(name, price, )
++ 
 
 </panel_attributes>
     <additional_attributes/>
@@ -92,14 +98,14 @@ m1=1
     <id>Relation</id>
     <coordinates>
       <x>220</x>
-      <y>490</y>
-      <w>260</w>
-      <h>90</h>
+      <y>600</y>
+      <w>190</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;&gt;&gt;
 m1=0..n
 </panel_attributes>
-    <additional_attributes>220.0;10.0;220.0;70.0;10.0;70.0</additional_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
