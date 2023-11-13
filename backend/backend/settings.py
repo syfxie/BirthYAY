@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'birthYay',
 ]
 
@@ -153,3 +154,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+
+# Rest Framework Configuration
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json', 
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
