@@ -18,7 +18,6 @@ class CustomUserListSerializer(serializers.ModelSerializer):
             'last_name',
             'birthday',
             'profile_photo',
-            'is_active',
             'is_staff',
             'date_joined',
             'updated_at'
