@@ -50,12 +50,12 @@ class CustomUserListSerializer(serializers.ModelSerializer):
 
 
 class CustomUserDetailsSerializer(serializers.ModelSerializer):
-    followers = serializers.HyperlinkedRelatedField(
-        many=True, view_name='user-detail', read_only=True)
-    following = serializers.HyperlinkedRelatedField(
-        many=True, view_name='user-detail', read_only=True)
-    gifts_given = serializers.HyperlinkedRelatedField(
-        many=True, view_name='gift-detail', read_only=True)
+    followers = serializers.PrimaryKeyRelatedField(
+        many=True, read_only=True)
+    following = serializers.PrimaryKeyRelatedField(
+        many=True, read_only=True)
+    gifts_given = serializers.PrimaryKeyRelatedField(
+        many=True, read_only=True)
 
     class Meta:
         model = CustomUser
@@ -130,22 +130,22 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
 
 class FollowUserSerializer(serializers.ModelSerializer):
-    user_to_follow = serializers.PrimaryKeyRelatedField(
-        required=True, queryset=CustomUser.objects.all())
+    following_id = serializers.PrimaryKeyRelatedField(required=True)
 
     class Meta:
         model = CustomUser
         fields = ('user_to_follow',)
 
     def validate(self, data):
-        user_to_follow = data.get('user_to_follow')
         user = self.context.get('request', None).user
+        following_id = data.get('following_id')
         errors = dict()
 
-        if user.id == user_to_follow.id:
-            errors['user_to_follow'] = ["User cannot follow themselves"]
+        if user.id == following_id:
+            errors['following_id'] = ["User cannot follow themselves"]
+
         if errors:
-            raise serializers.ValidationError(errors)
+            raise serializers.ValidationError(errors) # TODO: Fix this line when user follows themselve
 
         return super().validate(data)
 
@@ -153,7 +153,7 @@ class FollowUserSerializer(serializers.ModelSerializer):
 class GiftSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     receiver = serializers.PrimaryKeyRelatedField(
-        required=False, allow_null=True, queryset=CustomUser.objects.all())
+        required=False, allow_null=True, queryset=CustomUser.objects.filter(is_active=True))
     links = serializers.SlugRelatedField(
         many=True, slug_field='url', read_only=True)
 
