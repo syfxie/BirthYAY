@@ -1,11 +1,83 @@
+from datetime import datetime as dt
+from django.db.models import F, Value, IntegerField, ExpressionWrapper, Case, When
+from django.db.models.functions import ExtractMonth, ExtractDay
 from rest_framework import generics, filters, status, mixins, viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authentication import TokenAuthentication
 from .serializers import (CustomUserListSerializer, CustomUserDetailsSerializer, ChangePasswordSerializer,
                           FollowUserSerializer, GiftSerializer, LinkSerializer
                           )
 from .models import CustomUser, Gift, Link
 from .permissions import IsUser, IsUserOrAdminOrReadOnly
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+
+
+# Get the current logged in user
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_current_user(request):
+    try:
+        auth_token = Token.objects.get(key=token_key)
+        user = CustomUser.objects.get(id=auth_token.user_id)
+        data = CustomUserDetailsSerializer(instance=user).data
+        return Response(data=data, status=status.HTTP_200_OK)
+    except Token.DoesNotExist:
+        return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        return Response({'error': 'Authentication failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
+# Retrieves users ordered by upcoming birthdays
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_upcoming_birthdays(request):
+    try:
+        following = request.user.following
+
+        if following:
+            current_month = dt.now().month
+            current_date = dt.now().day
+
+            ordered_following = following.annotate(
+                birth_month=ExtractMonth('birthday'),
+                birth_day=ExtractDay('birthday')
+            ).order_by('birth_month', 'birth_day')
+
+            ordered_following = ordered_following.annotate(
+                is_before_current_date=Case(
+                    When(birth_month__lt=current_month, then=Value(1)),
+                    When(birth_month__lte=current_month,
+                        birth_day__lt=current_date, then=Value(1)),
+                    default=Value(0),
+                    output_field=IntegerField()
+                )
+            )
+            upcoming_this_year = ordered_following.filter(is_before_current_date=0)
+            upcoming_next_year = ordered_following.filter(is_before_current_date=1)
+            upcoming_this_year_data = CustomUserListSerializer(upcoming_this_year, many=True).data
+            upcoming_next_year_data = CustomUserListSerializer(upcoming_next_year, many=True).data
+            return Response(data={'this_year': upcoming_this_year_data, 'next_year': upcoming_next_year_data}, status=status.HTTP_200_OK)
+        else:
+            return Response(data={}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': 'Coudn`t get upcoming birthdays'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# Authenticates a user and returns an authentication token
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        data = {
+            'token': token.key,
+            'user_id': user.pk
+        }
+        return Response(data=data, status=status.HTTP_200_OK)
 
 
 class CustomUserList(generics.ListCreateAPIView):
@@ -13,7 +85,8 @@ class CustomUserList(generics.ListCreateAPIView):
     filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
-        return CustomUser.objects.filter(is_active=True)
+        queryset = CustomUser.objects.filter(is_active=true)
+        return queryset
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -69,16 +142,20 @@ class FollowUserView(generics.UpdateAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
-        user_to_follow = serializer.validated_data.get('user_to_follow')
-        user_to_follow_username = CustomUser.objects.get(id=user_to_follow.id).username
+        following_id = serializer.validated_data.get('following_id')
+        following_username = CustomUser.objects.get(id=following_id).username
 
         try:
-            instance.following.get(id=user_to_follow.id)
-            instance.following.remove(user_to_follow)
-            return Response({'success': f"You have unfollowed {user_to_follow_username}."}, status=status.HTTP_200_OK)
+            follow_user = CustomUser.objects.get(id=following_id)
+            try:
+                instance.following.get(id=following_id)
+                instance.following.remove(follow_user)
+                return Response({'success': f"You have unfollowed {following_username}."}, status=status.HTTP_200_OK)
+            except CustomUser.DoesNotExist:
+                instance.following.add(follow_user)
+                return Response({'success': f"You are now following {following_username}."}, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
-            instance.following.add(user_to_follow)
-            return Response({'success': f"You are now following {user_to_follow_username}."}, status=status.HTTP_200_OK)
+            return Response({'error': "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class GiftList(generics.ListCreateAPIView):
