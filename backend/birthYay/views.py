@@ -20,6 +20,7 @@ from rest_framework.authtoken.models import Token
 @permission_classes([AllowAny])
 def get_current_user(request):
     try:
+        token_key = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]
         auth_token = Token.objects.get(key=token_key)
         user = CustomUser.objects.get(id=auth_token.user_id)
         data = CustomUserDetailsSerializer(instance=user).data

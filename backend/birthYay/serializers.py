@@ -130,7 +130,7 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
 
 class FollowUserSerializer(serializers.ModelSerializer):
-    following_id = serializers.PrimaryKeyRelatedField(required=True)
+    following_id = serializers.UUIDField(required=True)
 
     class Meta:
         model = CustomUser
