@@ -13,7 +13,7 @@ function App() {
                         <Routes>
                             {routes.map((route, index) => (
                                     <Route key={index}
-                                           exact path={route.path}
+                                           path={route.path}
                                            element={route.element}
                                     />
                                 )

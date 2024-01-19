@@ -9,4 +9,8 @@ export const COLORS = {
     medYellow: '#FFE486',
     orange: '#f6c510',
     darkGreen: '#223F41',
+    lightGreen: '#E5FBF5',
+    green: '#05CD99',
+    lightRed: '#FDEEED',
+    red: '#EE5D50'
 };
