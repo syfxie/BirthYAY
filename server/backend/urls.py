@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.urls import URLPattern, URLResolver
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -34,3 +35,24 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
 
+# Print all URLs
+# TODO Add feature to track "sent" gifts,  Order gifts by most recently added/edited
+
+urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
+
+
+def list_urls(lis, acc=None):
+    if acc is None:
+        acc = []
+    if not lis:
+        return
+    l = lis[0]
+    if isinstance(l, URLPattern):
+        yield acc + [str(l.pattern)]
+    elif isinstance(l, URLResolver):
+        yield from list_urls(l.url_patterns, acc + [str(l.pattern)])
+    yield from list_urls(lis[1:], acc)
+
+
+for p in list_urls(urlconf.urlpatterns):
+    print(''.join(p))
