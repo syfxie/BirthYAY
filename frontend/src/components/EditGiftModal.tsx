@@ -39,7 +39,7 @@ export default function BirthdayCard(){
 //         }
 //     }
 
-//     const validate = (values) => { // TODO Make a helper to validate gifts.
+//     const validate = (values) => {
 //         const errors = {};
 
 //         if (!values.name) {
