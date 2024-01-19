@@ -23,4 +23,3 @@ Celebrate is an all-in-one social platforms for users to track upcoming birthday
 3. Out of ideas? Explore populare gifts from other users
 4. Make a wishlist to help your friends find the perfect gift
 
-## Architecture Overview
