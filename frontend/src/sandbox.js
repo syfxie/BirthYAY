@@ -1,13 +1,11 @@
-import React from 'react';
-
+import * as React from 'react';
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
-import '../fonts.css'
-import { COLORS } from '../constants/Colors'
-import ColoredButton from "./UI/ColoredButton";
-import {formatFullName, calculateUpcomingAge} from '../utils/userHelpers'
 
 
 export default function BirthdayCard({ user }) {

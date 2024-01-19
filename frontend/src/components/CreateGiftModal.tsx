@@ -1,4 +1,4 @@
-// import React, {useEffect, useState} from 'react';
+// import React, {useEffect, useState}from 'react';
 // import axios from "axios";
 
 // import Modal from '@mui/material/Modal';
@@ -9,13 +9,19 @@
 
 // import {useAuth} from "../contexts/AuthContext";
 
-// export default function EditGiftModal({gift, open, setOpen}) {
+export default function BirthdayCard(){
+    return(
+        <div>Hello</div>
+    )
+}
+
+// export default function CreateGiftModal({open, setOpen}) {
 
 //     const {user, token} = useAuth();
 
-//     const updateGift = async (giftData) => {
+//     const createGift = async (giftData) => {
 //         if (token && token.length > 0 && giftData) {
-//             await axios.put(`/api/gifts/${gift.id}/`,
+//             await axios.post('/api/gifts/',
 //                 {
 //                     name: giftData.name,
 //                     price: giftData.price,
@@ -25,6 +31,7 @@
 //                 {
 //                     headers: {
 //                         Authorization: `Token ${token}`,
+//                         "Content-Type": 'application/json',
 //                     },
 //                 }).then((aResponse) => {
 //                 setOpen(false);
@@ -45,15 +52,15 @@
 
 //     const formik = useFormik({
 //         initialValues: {
-//             name: gift.name,
-//             price: gift.price,
-//             starred: gift.starred,
-//             receiver: gift.receiver
+//             name: '',
+//             price:0,
+//             starred:false,
+//             receiver:''
 //         },
 //         validate,
 //         validateOnChange: false,
 //         onSubmit: values => {
-//             updateGift(values);
+//             createGift(values);
 //         }
 //     });
 
@@ -148,7 +155,7 @@
 //                                 color="primary"
 //                                 style={{ margin: '20px', width: '40%' }}
 //                         >
-//                         Update
+//                         Create
 //                     </Button>
 //                     </div>
 //                 </form>

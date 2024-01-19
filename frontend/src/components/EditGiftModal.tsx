@@ -9,6 +9,13 @@
 
 // import {useAuth} from "../contexts/AuthContext";
 
+
+export default function BirthdayCard(){
+    return(
+        <div>Hello</div>
+    )
+}
+
 // export default function EditGiftModal({gift, open, setOpen}) {
 
 //     const {user, token} = useAuth();
@@ -32,7 +39,7 @@
 //         }
 //     }
 
-//     const validate = (values) => {
+//     const validate = (values) => { // TODO Make a helper to validate gifts.
 //         const errors = {};
 
 //         if (!values.name) {

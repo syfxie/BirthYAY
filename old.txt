@@ -1,0 +1,247 @@
+// export default function Dashboard() {
+
+//     // const {user, token, isLoggedIn} = useAuth();
+
+//     const [gifts, setGifts] = useState([]);
+//     const [openModal, setOpenModal] = useState(false);
+//     const [birthdayUsers, setBirthdayUsers] = useState([]);
+
+//     // Methods
+
+//     const getBirthdays = async () => {
+//         await axios.get('/api/upcoming-birthdays/', {
+//                 headers: {
+//                     Authorization: `Token ${token}`
+//                 },
+//             }
+//         ).then((aResponse) => {
+//             let thisYearUsers = aResponse.data.this_year;
+//             let nextYearUsers = aResponse.data.next_year;
+//             let mergedBirthdayUsers = [];
+
+//             Object.keys(thisYearUsers).forEach(key => {
+//                 mergedBirthdayUsers.push(thisYearUsers[key]);
+//             });
+
+//             Object.keys(nextYearUsers).forEach(key => {
+//                 mergedBirthdayUsers.push(nextYearUsers[key]);
+//             });
+//             setBirthdayUsers(mergedBirthdayUsers.slice(0, 3));
+
+//         });
+//     }
+
+//     const getGifts = async () => {
+//         await axios.get('/api/gifts/', {
+//                 headers: {
+//                     Authorization: `Token ${token}`
+//                 },
+//             }
+//         ).then((aResponse) => {
+//             setGifts(aResponse.data.results);
+//         });
+//     }
+
+//     const deleteGift = async (aGift) => {
+//         if (token && token.length > 0 && aGift && aGift.id) {
+//             await axios.delete(`/api/gifts/${aGift.id}/`, {
+//                 headers: {
+//                     Authorization: `Token ${token}`,
+//                 },
+//             }).then((aResponse) => {
+//                 let updatedGifts = [...gifts];
+//                 const indexToRemove = updatedGifts.indexOf(aGift);
+
+//                 if (indexToRemove !== -1) {
+//                     updatedGifts.splice(indexToRemove, 1);
+//                     setGifts(updatedGifts);
+//                 }
+//             });
+//         }
+//     }
+
+//     useEffect(() => {
+//         if (isLoggedIn() && token) {
+//             getBirthdays();
+//             getGifts();
+//         }
+//     }, [user]);
+
+//     return (
+//         user && birthdayUsers && gifts ?
+//             <div style={{display:'flex', flexDirection:'row', maxWidth:'1500px', height:'100vh'}}>
+//                 <SideBar/>
+
+//                 <div style={{justifyContent:'center', alignItems: 'center', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', flex: '1 1 auto', overflowY:'auto'}}>
+//                     <div style={{maxWidth: '80%', marginTop: '80px'}}>
+//                         <div style={{justifyContent: 'flex-end', display: 'flex', }}>
+//                             <CornerUserProfile/>
+//                         </div>
+
+//                         <div style={{marginTop:'30px'}}>
+//                             <h1 style={{fontFamily: 'Rowdies', color: COLORS.darkGray}}>
+//                                 Upcoming Birthdays
+//                             </h1>
+
+//                             {birthdayUsers && birthdayUsers.length > 0 ?
+//                                 <Stack sx={{width:'100%'}}
+//                                        spacing={2}
+//                                 >
+//                                     {birthdayUsers.map((aUser, aIndex) => {
+//                                         return <BirthdayCard key={'Birthday User' + aIndex} user={aUser} />;
+//                                     })
+//                                     }
+//                                 </Stack>
+//                                 :
+//                                 null
+//                             }
+//                         </div>
+
+//                         <div style={{marginTop:'20px', marginBottom: '20px'}}>
+//                             <div style={{display: 'flex', flexDirection:'row', alignItems:'center'}}>
+//                                 <h1 style={{fontFamily: 'Rowdies', color: COLORS.darkGray}}>
+//                                     My Gifts
+//                                 </h1>
+
+//                                 <IconButton onClick={() => setOpenModal(true)}>
+//                                     <AddCircleOutlineOutlinedIcon/>
+//                                 </IconButton>
+//                             </div>
+
+//                             <CreateGiftModal open={openModal}
+//                                              setOpen={setOpenModal}
+//                             />
+
+//                             <Grid container sx={{width:'100%'}}
+//                                   spacing={2}
+//                             >
+//                                 {gifts.slice(0, 3).map((aGift, aIndex) => {
+//                                     return <Grid key={'Gift' + aIndex}
+//                                                  xs={10} md={4} item
+//                                     >
+//                                         <GiftCard gift={aGift}
+//                                                   deleteGift={deleteGift}/>
+//                                     </Grid>;
+//                                 })
+//                                 }
+//                             </Grid>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//             :
+//             null
+//     );
+// }
+
+
+
+// GIFT CARD
+
+// export default function GiftCard({ gift, deleteGift }) {
+
+//     const [openModal, setOpenModal] = useState(false);
+
+//     return (
+//         gift && Object.keys(gift).length > 0 ?
+//             <Card sx={{ minWidth: 200, maxWidth: 300, borderRadius: '15px', height:'100%' }}>
+//                 <CardContent>
+//                     <h2 style={{ color: COLORS.darkGray, fontFamily: "Rowdies", marginBottom: '5px', marginTop: '5px'}}>
+//                         {gift.name}
+//                     </h2>
+
+//                     <p style={{color: COLORS.lightGray,  fontFamily: 'Lato', marginTop:0, fontSize: '14px'}}>
+//                         {gift.receiver && gift.receiver.firstName ? gift.receiver.firstName : "Who's the surprised for?"}
+//                     </p>
+
+//                     <ColoredButton onClick={() => setOpenModal(true)}>
+//                         Edit
+//                     </ColoredButton>
+
+//                     <ColoredButton onClick={() => deleteGift(gift)}>
+//                         Delete
+//                     </ColoredButton>
+
+//                     <EditGiftModal gift={gift}
+//                                    open={openModal}
+//                                    setOpen={setOpenModal}
+//                     />
+//                 </CardContent>
+//             </Card>
+//             :
+//             null
+//     );
+// }
+
+
+//
+//     <div style={{display: "flex", height: "100vh", justifyContent: "flex-start", flex: "0 1 auto"}}>
+        // <Sidebar backgroundColor={COLORS.lightYellow}
+        //         collapsedWidth="80px"
+        //              collapsed={collapsed}
+        //     >
+        //         <div style={{display: "flex", flexDirection:"column", height:"80vh"}}>
+        //             <div style={{width: "100%", display: "flex", justifyContent: "flex-end"}}>
+        //                 <IconButton onClick={() => setCollapsed(!collapsed)}>
+        //                     <MenuIcon />
+        //                 </IconButton>
+        //             </div>
+        //
+        //             {collapsed ?
+        //                 <div style={{height:"140px"}}></div>
+        //                 :
+        //                 <img alt="Logo"
+        //                      src="/images/Celebrate.png"
+        //                      style={{marginLeft: "15px", objectFit: "contain", marginBottom: "20px"}}
+        //                      width="220px"
+        //                      height="120px"
+        //                 />
+        //
+        //             }
+        //
+        //             <Menu menuItemStyles={menuItemStyles}>
+        //                 <MenuItem icon={<SpaceDashboardOutlinedIcon />}
+        //                           component={<Link to="/home" className="link" />}
+        //                 >
+        //                     Dashboard
+        //                 </MenuItem>
+        //
+        //                 <MenuItem icon={<ExploreOutlinedIcon />}
+        //                           component={<Link to="/explore" className="link" />}
+        //                 >
+        //                     Explore
+        //                 </MenuItem>
+        //
+        //                 <MenuItem icon={<CakeOutlinedIcon />}
+        //                           component={<Link to="/birthdays" className="link" />}
+        //                 >
+        //                     My Birthdays
+        //                 </MenuItem>
+        //
+        //                 <MenuItem icon={<CardGiftcardOutlinedIcon />}
+        //                           component={<Link to="/gifts" className="link" />}
+        //                 >
+        //                     My Gifts
+        //                 </MenuItem>
+        //
+        //                 <MenuItem icon={<AutoFixHighOutlinedIcon />}
+        //                           component={<Link to="/wishlist" className="link" />}
+        //                 >
+        //                     My Wishlist
+        //                 </MenuItem>
+        //             </Menu>
+        //         </div>
+        //
+        //         <div>
+        //             <Menu
+        //                 menuItemStyles={menuItemStyles}
+        //             >
+        //                 <MenuItem icon={<SettingsOutlinedIcon />}
+        //                           component={<Link to="/settings" className="link" />}
+        //                 >
+        //                     Settings
+        //                 </MenuItem>
+        //             </Menu>
+        //         </div>
+        //     </Sidebar>
+        // </div>
