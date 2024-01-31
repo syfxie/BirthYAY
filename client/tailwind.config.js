@@ -6,7 +6,11 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors: COLORS
+      colors: COLORS,
+      fontFamily: {
+        dmSans: ["DM Sans", "Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"]
+      }
     },
     borderRadius: {
       '2xs': '4px',
@@ -52,20 +56,7 @@ module.exports = {
       '3xl': '1400px',
       '4xl': '1600px',
       '5xl': '1800px',
-    },
-    // extend: {
-    //   margin: {
-    //     0.25: '1px',
-    //     4.5: '18px',
-    //   },
-    //   padding: {
-    //     4.5: '18px',
-    //   },
-    //   width: {
-    //     3.5: '14px',
-    //     4.5: '18px',
-    //   },
-    // },
+    }
   },
   plugins: [],
 };
