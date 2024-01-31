@@ -13,6 +13,7 @@
     <br><br>
 </div>
 
+
 ## Overview?
 
 Celebrate is an all-in-one social platforms for users to track upcoming birthdays and find gifts ahead of time. Wanting to avoid the guilt of missing a friend's birthday and the frustration of scrambling to put together a gift last-minute, I was inspired to create an app that would help me plan ahead, and make this process as easy as possible.
@@ -22,3 +23,10 @@ Celebrate is an all-in-one social platforms for users to track upcoming birthday
 2. Create gifts designated towards a specific friend
 3. Out of ideas? Explore populare gifts from other users
 4. Make a wishlist to help your friends find the perfect gift
+
+## Preview
+<img width="1624" alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/206a6f0a-c26c-45a1-9f6e-f7f135699412">
+
+<img width="1624" alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/3600c89a-1c4a-4ce2-a444-4ed85aec3fdb">
+
+
