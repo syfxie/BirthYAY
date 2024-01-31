@@ -23,7 +23,10 @@ Celebrate is an all-in-one social platforms for users to track upcoming birthday
 3. Out of ideas? Explore populare gifts from other users
 4. Make a wishlist to help your friends find the perfect gift
 
+## Application Architecture
+<img width="1624" alt="image" src="https://github.com/syfxie/Celebrate/blob/d1ff111b2038b4268eebb25eada176e76b23004c/architecture-diagram.png">
 
 ## Preview
 <img width="1624" alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/3909ff81-8cb0-4863-969f-9efa327b1803">
+
 
