@@ -7,6 +7,7 @@ type ButtonProps = {
     onClick?: () => void;
     font?: string;
     bg?: string;
+    margin?: string;
     padding?: string;
     border?: string;
     hover?: string;
@@ -25,14 +26,15 @@ export default function Button({
                                    border,
                                    hover,
                                    icon,
+                                   margin,
                                    size = 'h-10 w-20',
                                    padding = 'px-5',
                                    iconPosition = 'right-5',
                                    disabled = false,
                                    classes = ''
                                }: ButtonProps) {
-    let buttonClasses = `relative inline-block text-center rounded-md transition-300 ${size} ${font} ${color} ${bg} ${padding} ${border} ${hover} 
-  ${disabled ? 'opacity-60 cursor-auto' : 'cursor-pointer'} ${classes}`;
+    let buttonClasses = `relative inline-block text-center rounded-md transition-300 ${size} ${font} ${color} 
+    ${bg} ${margin} ${padding} ${border} ${hover} ${disabled ? 'opacity-60 cursor-auto' : 'cursor-pointer'} ${classes}`;
 
     console.log('sophie button classes', buttonClasses);
 
