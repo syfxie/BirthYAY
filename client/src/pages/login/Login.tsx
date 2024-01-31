@@ -6,6 +6,12 @@ export default function LogIn() {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    const handleLogIn = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        // check credentials
+    }
+
     return (
         <div className='bg-light flex flex-col justify-center items-center h-screen'>
             <div className='w-full max-w-sm bg-white border-2 border-b-gray-100 rounded-md px-8 py-8'>
