@@ -1,6 +1,6 @@
 <div align="center">
     <div id="user-content-toc">
-      <summary><h1 style="display: inline-block; margin-bottom: 0">Celebrate: Your Personal Birthday Tracker and Gift Planner</h1></summary>
+      <h1 style="display: inline-block; margin-bottom: 0">Celebrate: Your Personal Birthday Tracker and Gift Planner</h1>
     </div>
     <h4>Say goodbye to belated birthday wishes and last minute gifts!</h4>
     <br>
