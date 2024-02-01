@@ -7,20 +7,58 @@ import BirthdayCard from "../../components/BirthdayCard";
 export default function Dashboard() {
     console.log('Sophie dashboard');
 
-    const user = {
+    const user1 = {
         email: 'email@gmail.com',
-        username: 'username',
-        firstName: 'first',
-        lastName: 'last',
+        username: 'happihappi',
+        firstName: 'Ella',
+        lastName: 'Stoch',
         birthday: 'January 20',
+        age: 28
+    }
+
+    const user2 = {
+        email: 'email@gmail.com',
+        username: 'sophiexxie',
+        firstName: 'Sophie',
+        lastName: 'Koi',
+        birthday: 'March 20',
         age: 20
     }
 
-    const gift = {
+    const user3 = {
+        email: 'email@gmail.com',
+        username: 'bbbbing',
+        firstName: 'Brian',
+        lastName: 'King',
+        birthday: 'January 12',
+        age: 16
+    }
+
+    const gift1 = {
         name: 'Teddy Bear',
         price: 20.99,
         starred: false,
-        receiver: user
+        receiver: user1
+    }
+
+    const gift2 = {
+        name: 'Mug',
+        price: 12.50,
+        starred: false,
+        receiver: user1
+    }
+
+    const gift3 = {
+        name: 'Gold Watch',
+        price: 220.89,
+        starred: false,
+        receiver: user3
+    }
+
+    const gift4 = {
+        name: 'Snacks',
+        starred: false,
+        receiver: user3
     }
 
     return(
@@ -44,11 +82,13 @@ export default function Dashboard() {
                         />
                     </div>
                     <div className='flex flex-wrap gap-3 justify-start'>
-                        <GiftCard gift={gift} deleteGift={() => {
+                        <GiftCard gift={gift1} deleteGift={() => {
                         }}/>
-                        <GiftCard gift={gift} deleteGift={() => {
+                        <GiftCard gift={gift2} deleteGift={() => {
                         }}/>
-                        <GiftCard gift={gift} deleteGift={() => {
+                        <GiftCard gift={gift3} deleteGift={() => {
+                        }}/>
+                        <GiftCard gift={gift4} deleteGift={() => {
                         }}/>
                     </div>
                     <div className='w-full flex justify-end items-end'>
@@ -77,11 +117,11 @@ export default function Dashboard() {
                                 onClick={() => {}}
                         />
                     </div>
-                    <BirthdayCard user={user}/>
-                    <BirthdayCard user={user}/>
-                    <BirthdayCard user={user}/>
-                    <BirthdayCard user={user}/>
-                    <BirthdayCard user={user}/>
+                    <BirthdayCard user={user1}/>
+                    <BirthdayCard user={user2}/>
+                    <BirthdayCard user={user3}/>
+                    {/*<BirthdayCard user={user}/>*/}
+                    {/*<BirthdayCard user={user}/>*/}
 
                     <div className='w-full flex justify-end items-end'>
                         <Button text={'View all'}

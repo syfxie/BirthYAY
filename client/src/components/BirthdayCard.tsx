@@ -19,8 +19,8 @@ export default function BirthdayCard({user}:BirthdayCardProps) {
                 />
 
                 <div className='w-48 mr-4'>
-                    <p className='text-2xl font-bold text-navy font-dmSans'>{formatFullName(user)}</p>
-                    <p className='text-darkGray font-dmSans'>{user.username}</p>
+                    <p className='text-2xl font-bold text-navy font-dmSans mb-0'>{formatFullName(user)}</p>
+                    <p className='text-lightGray font-dmSans mt-0'>{user.username}</p>
                 </div>
 
                 <div className='flex w-6/12 md:flex-row sm:flex-col justify-between items-center'>
