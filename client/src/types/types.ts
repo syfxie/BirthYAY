@@ -9,7 +9,7 @@ export type User = {
 
 export type Gift = {
     name: string;
-    price: number;
+    price?: number;
     starred: boolean;
     receiver?: User;
 }
