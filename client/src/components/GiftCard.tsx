@@ -15,9 +15,9 @@ export default function GiftCard({gift, deleteGift}: giftCardProps){
 
     return(
         <div className={"h-64 max-w-80 min-w-72 rounded-md mt-5 flex flex-col items-center justify-center px-4 py-8 bg-white shadow-md"}>
-            <div className='bg-gradient-to-r from-blue200 to-blue100 h-3/6 w-full flex flex-col justify-between items-stretch px-3 py-2 rounded-md'>
+            <div className='bg-gradient-to-r from-blue200 to-blue100 h-3/6 w-full min-h-24 flex flex-col justify-between items-stretch px-3 py-2 rounded-md'>
                 <p className='font-dmSans text-4xl font-bold text-light'>{gift.name}</p>
-                <p className='font-dmSans text-light text-end'>{gift.price}</p>
+                <p className='font-dmSans text-light text-end'>{gift.price ? `$ ${gift.price}` : ''}</p>
             </div>
 
             <div className='w-full flex items-end'>
@@ -32,7 +32,7 @@ export default function GiftCard({gift, deleteGift}: giftCardProps){
 
                         <div className='mr-4'>
                             <p className='font-dmSans font-medium text-navy'>{gift.receiver ? formatFullName(gift.receiver) : 'Who\'s the lucky one?'}</p>
-                            <p className='font-dmSans text-darkGray text-md'>{gift.receiver?.username}</p>
+                            <p className='font-dmSans text-lightGray text-md'>{gift.receiver?.username}</p>
                         </div>
                     </div>
 
