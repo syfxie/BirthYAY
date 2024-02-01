@@ -27,6 +27,10 @@ Celebrate is an all-in-one social platforms for users to track upcoming birthday
 <img width="1624" alt="image" src="https://github.com/syfxie/Celebrate/blob/d1ff111b2038b4268eebb25eada176e76b23004c/architecture-diagram.png">
 
 ## Preview
-<img width="1624" alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/3909ff81-8cb0-4863-969f-9efa327b1803">
+<img width=80% alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/3909ff81-8cb0-4863-969f-9efa327b1803">
+<img width=80% alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/09a66b9a-becd-49f1-a5dd-a878052da66b">
+<img width=80% alt="image" src="https://github.com/syfxie/Celebrate/assets/116769135/2a66f8a8-9321-4a36-b9fa-3883b2a726c2">
+
+
 
 
