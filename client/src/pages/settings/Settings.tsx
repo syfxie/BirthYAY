@@ -1,7 +1,17 @@
+import CreateGiftCard from "../../components/CreateGiftCard";
+import EditGiftCard from "../../components/EditGiftCard";
+
+
 export default function Settings() {
+    const gift = {
+        name: 'Snacks',
+        starred: true
+    }
+
     return (
         <div>
-            <h1>Coming Soon</h1>
+            <CreateGiftCard/>
+            <EditGiftCard gift={gift} deleteGift={() =>{}}/>
         </div>
     );
 }
